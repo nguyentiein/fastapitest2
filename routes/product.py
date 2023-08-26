@@ -95,12 +95,14 @@ def read_products(request: Request, skip: int = Query(1, alias="offset"), limit:
         next_offset=next_offset,
     )
 
+
     return HTMLResponse(content=rendered_content)
 
 
 
 def get_products(request: Request):
     products_list = conn.execute(select(products)).fetchall()
+
 
     # Log products list
     logging.info("Products list: %s", products_list)
