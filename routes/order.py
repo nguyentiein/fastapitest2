@@ -63,14 +63,6 @@ def create_order(
 
 
 
-
-
-
-
-
-
-
-
 @order.get("/orders",
             tags=["orders"],
             response_model=List[Order],

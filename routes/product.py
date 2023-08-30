@@ -75,6 +75,19 @@ app.mount("/assets", StaticFiles(directory="assets/"), name="static")
 productss = APIRouter()
 
 
+
+
+@productss.get(
+    "/test",
+    tags=["products"],
+    response_class=HTMLResponse,
+    description="test products",
+)
+def search_products(request: Request, query: str='b'):
+
+    return query;
+
+
 @productss.get("/products", response_class=HTMLResponse)
 def read_products(request: Request, skip: int = Query(1, alias="offset"), limit: int = Query(2, alias="page_size"), db: Session = Depends(get_db)):
     query = select(products).offset(skip).limit(limit)
@@ -132,6 +145,8 @@ async def shop_cart(request: Request):
     return templates.TemplateResponse("single-product.html", {"request": request})
 
 
+
+
 @productss.get("/singleproduct/{productid}")
 async def shop_cart(request: Request, productid: str):
     # Thực hiện truy vấn để lấy thông tin sản phẩm từ cơ sở dữ liệu
@@ -154,6 +169,8 @@ async def shop_cart(request: Request, productid: str):
     )
 
     return templates.TemplateResponse("single-product.html", {"request": request, "product": product})
+
+
 
 
 

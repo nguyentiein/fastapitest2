@@ -1,15 +1,3 @@
-# from fastapi import FastAPI
-# from routes.user import user
-# from config.openapi import tags_metadata
-
-# app = FastAPI(
-#     title="Users API",
-#     description="a REST API using python and mysql",
-#     version="0.0.1",
-#     openapi_tags=tags_metadata,
-# )
-
-# app.include_router(user)
 from config.db import meta 
 from fastapi.staticfiles import StaticFiles 
 from fastapi import FastAPI, Depends, Form, status, Request
@@ -22,7 +10,6 @@ from routes.user import user
 from routes.product import productss
 from routes.order import order
 from models.product import products 
-from passlib.hash import bcrypt
 
 
 
@@ -37,12 +24,20 @@ templates = Jinja2Templates(directory="assets/templates")
 app.mount("/assets", StaticFiles(directory="assets/"), name="static")
 
 
-@app.get("/s", response_class=HTMLResponse)
+@app.get("/", response_class=HTMLResponse)
 async def read_root(request: Request):
     try:
-                return templates.TemplateResponse("index.html", {"request": request})
+         return templates.TemplateResponse("index.html", {"request": request})
     except Exception as e:
         print("Template rendering error:", e)
+
+
+
+
+
+
+
+
 
 @app.get("/login_index", response_class=HTMLResponse)
 async def login(request: Request):
@@ -91,11 +86,11 @@ app.include_router(user)
 app.include_router(order)
 
 
+# from fastapi import FastAPI
+
+# app = FastAPI()
 
 
-
-
-
-
-
-
+# @app.get("/")
+# def read_root():
+#     return {"message": "Hello, FastAPI!"}
